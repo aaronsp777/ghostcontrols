@@ -10,7 +10,7 @@ import (
 var (
 	action    = flag.String("action", "toggle", "One of (toggle, test, party, vacation)")
 	id        = flag.Int64("id", 123456, "Transmitter ID")
-	button_id = flag.Int64("button_id", 1, "(1:primary, 0:secondary)")
+	button_id = flag.Int64("button_id", 2, "(2:primary, 1:secondary, 0:none)")
 	version   = flag.Int64("version", 1, "(1: remote, 2:keypad)")
 	dry_run   = flag.Bool("dry_run", false, "skip calling sendook")
 )
@@ -41,7 +41,7 @@ func codeFromFlags() (int64, error) {
 	code |= *version << 38
 	code |= option << 34
 	code |= command << 30
-	code |= *button_id << 23
+	code |= *button_id << 22
 	code |= *id
 	return code, nil
 }
