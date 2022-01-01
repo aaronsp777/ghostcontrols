@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"strconv"
 )
 
 var (
@@ -13,6 +14,7 @@ var (
 	button_id = flag.Int64("button_id", 2, "(2:primary, 1:secondary, 0:none)")
 	version   = flag.Int64("version", 1, "(1: remote, 2:keypad)")
 	dry_run   = flag.Bool("dry_run", false, "skip calling sendook")
+	count     = flag.Int64("count", 10, "Number of times to transmit the code")
 )
 
 func decodeAction(action string) (option, command int64, err error) {
@@ -71,7 +73,7 @@ func main() {
 		fmt.Printf("Binary: %b\n", code)
 		fmt.Printf("After pwm: %q\n", bits)
 	} else {
-		cmd := exec.Command("sudo", "sendook", "-1", "250", "-0", "250", "-r", "10", "-p", "40000", bits)
+		cmd := exec.Command("sudo", "sendook", "-1", "250", "-0", "250", "-r", strconv.FormatInt(*count, 10), "-p", "40000", bits)
 		err := cmd.Run()
 		if err != nil {
 			fmt.Println(err)
