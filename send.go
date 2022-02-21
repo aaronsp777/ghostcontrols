@@ -9,10 +9,10 @@ import (
 )
 
 var (
-	action    = flag.String("action", "toggle", "One of (toggle, test, party, vacation)")
+	action    = flag.String("action", "toggle", "One of (toggle, open, test, party, vacation)")
 	id        = flag.Int64("id", 123456, "Transmitter ID")
 	button_id = flag.Int64("button_id", 2, "(2:primary, 1:secondary, 0:none)")
-	version   = flag.Int64("version", 1, "(1: remote, 2:keypad)")
+	version   = flag.Int64("version", 1, "(1: remote, 2:keypad, 9:sensor)")
 	dry_run   = flag.Bool("dry_run", false, "skip calling sendook")
 	count     = flag.Int64("count", 10, "Number of times to transmit the code")
 )
@@ -21,6 +21,8 @@ func decodeAction(action string) (option, command int64, err error) {
 	switch action {
 	case "toggle":
 		command = 3
+	case "open":
+		command = 1
 	case "party":
 		option = 8
 	case "vacation":
